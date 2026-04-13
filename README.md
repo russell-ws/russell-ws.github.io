@@ -1,6 +1,6 @@
 # russell-ws.github.io
 
-Personal portfolio website
+Just a personal portfolio website :)
 
 Live site on https://russell-ws.github.io
 
