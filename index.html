@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Russell Sumarno — Biomedical Engineer & Data Analyst</title>
+<meta name="description" content="Russell Sumarno — Biomedical Engineer and Data Analyst based in Vancouver, BC.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #04080f;
+    --surface: #080e1a;
+    --border: #0f2040;
+    --accent: #3b82f6;
+    --accent2: #ffffff;
+    --text: #e8f0ff;
+    --muted: #5a7a9e;
+    --card-bg: #060d1a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--accent); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed; width: 40px; height: 40px;
+    border: 1.5px solid var(--accent); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.12s ease; opacity: 0.5;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 48px;
+    background: rgba(10,10,15,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 3px; color: var(--accent);
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    letter-spacing: 2px; color: var(--muted);
+    text-decoration: none; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 48px; padding-top: 100px;
+    z-index: 1; overflow: hidden;
+  }
+  .hero-content { max-width: 860px; }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    letter-spacing: 3px; color: var(--accent); text-transform: uppercase;
+    margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-tag::before {
+    content: ''; display: inline-block;
+    width: 32px; height: 1px; background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 9vw, 118px);
+    line-height: 0.92; letter-spacing: 2px; margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero h1 .outline {
+    -webkit-text-stroke: 2px var(--accent); color: transparent;
+  }
+  .hero h1 .outline2 {
+    -webkit-text-stroke: 2px #ffffff; color: transparent;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 520px; line-height: 1.7; margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+  }
+
+  .btn-primary {
+    padding: 14px 32px; background: var(--accent); color: #0a0a0f;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 1px; border: none; cursor: none; text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translate(-3px,-3px); box-shadow: 6px 6px 0 #ffffff; }
+
+  .btn-secondary {
+    padding: 14px 32px; background: transparent; color: var(--text);
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 1px; border: 1.5px solid var(--border); cursor: none;
+    transition: border-color 0.2s, color 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-bg-text {
+    position: absolute; right: -40px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(140px, 16vw, 240px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(59,130,246,0.08);
+    letter-spacing: 8px; pointer-events: none; user-select: none; white-space: nowrap;
+  }
+
+  /* DUAL IDENTITY BADGES */
+  .dual-badges {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .badge {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 14px;
+    border: 1px solid; display: inline-block;
+  }
+  .badge-bio { border-color: #ffffff; color: #ffffff; }
+  .badge-data { border-color: var(--accent); color: var(--accent); }
+
+  /* STATUS BAR */
+  .status-bar {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    overflow: hidden; background: var(--surface);
+  }
+  .status-track { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+  .status-item {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 2px; color: var(--muted);
+    padding: 14px 40px; text-transform: uppercase; flex-shrink: 0;
+  }
+  .status-item span { color: var(--accent); margin-right: 8px; }
+  .status-item span.g { color: #ffffff; }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 1; padding: 120px 48px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 1; margin-bottom: 48px; letter-spacing: 1px;
+  }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .about-text { color: var(--muted); line-height: 1.8; font-size: 1rem; }
+  .about-text p + p { margin-top: 20px; }
+
+  .domain-cards { display: flex; flex-direction: column; gap: 2px; margin-bottom: 2px; }
+  .domain-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 22px 24px; display: flex; align-items: flex-start; gap: 16px;
+    transition: border-color 0.2s;
+  }
+  .domain-card:hover { border-color: rgba(232,255,71,0.3); }
+  .domain-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .domain-label {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .domain-label.bio { color: #ffffff; }
+  .domain-label.data { color: var(--accent); }
+  .domain-desc { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); line-height: 1.6; letter-spacing: 0.5px; }
+
+  .highlight-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2px;
+  }
+  .stat-box {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 20px 18px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem;
+    color: var(--accent); letter-spacing: 1px; line-height: 1;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace; font-size: 0.66rem;
+    color: var(--muted); letter-spacing: 1px; margin-top: 6px;
+  }
+
+  .skills-section { margin-top: 48px; }
+  .skills-group { margin-bottom: 32px; }
+  .skills-group-label {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    letter-spacing: 2px; color: var(--muted); text-transform: uppercase;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+  }
+  .skills-group-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 2px; }
+  .skill-chip {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 10px 16px; font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    color: var(--text); letter-spacing: 1px;
+    transition: border-color 0.2s, color 0.2s; position: relative; overflow: hidden;
+  }
+  .skill-chip::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: var(--accent); transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s;
+  }
+  .skill-chip.bio::before { background: var(--accent2); }
+  .skill-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-chip.bio:hover { border-color: #ffffff; color: #ffffff; }
+  .skill-chip.bio::before { background: #ffffff; }
+  .skill-chip:hover::before { transform: scaleY(1); }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 2px; }
+  .exp-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 36px; transition: border-color 0.25s; position: relative; overflow: hidden;
+  }
+  .exp-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.05), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .exp-card:hover { border-color: rgba(59,130,246,0.35); }
+  .exp-card:hover::after { opacity: 1; }
+  .exp-card.bio-card::after { background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent); }
+  .exp-card.bio-card:hover { border-color: rgba(255,255,255,0.2); }
+
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  .exp-role-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .exp-role { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 1px; line-height: 1; }
+  .exp-type-badge {
+    font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 2px;
+    text-transform: uppercase; padding: 3px 8px; border: 1px solid;
+  }
+  .exp-type-badge.data { border-color: var(--accent); color: var(--accent); }
+  .exp-type-badge.bio { border-color: #ffffff; color: #ffffff; }
+  .exp-type-badge.both { border-color: var(--muted); color: var(--muted); }
+  .exp-meta { text-align: right; }
+  .exp-company { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--accent); letter-spacing: 1px; }
+  .exp-date { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 1px; margin-top: 4px; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    font-size: 0.88rem; color: var(--muted); line-height: 1.7;
+    padding: 6px 0; padding-left: 20px; position: relative;
+  }
+  .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; }
+  .project-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    padding: 36px; transition: border-color 0.25s; position: relative; overflow: hidden; cursor: none;
+  }
+  .project-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.06), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-card.bio-proj::after { background: linear-gradient(135deg, rgba(255,255,255,0.04), transparent); }
+  .project-card:hover { border-color: rgba(59,130,246,0.5); }
+  .project-card.bio-proj:hover { border-color: rgba(255,255,255,0.3); }
+  .project-card:hover::after { opacity: 1; }
+
+  .project-num { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 2px; margin-bottom: 20px; }
+  .project-num.bio { color: #ffffff; }
+  .project-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px; margin-bottom: 14px; line-height: 1.05; }
+  .project-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem;
+    padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); letter-spacing: 1px;
+  }
+  .project-arrow { position: absolute; top: 36px; right: 36px; font-size: 1.2rem; color: var(--muted); transition: transform 0.2s, color 0.2s; }
+  .project-card:hover .project-arrow { transform: translate(4px,-4px); color: var(--accent); }
+  .project-card.bio-proj:hover .project-arrow { color: #ffffff; }
+  a.project-card { text-decoration: none; color: inherit; display: block; }
+
+  /* CONTACT */
+  .contact-section { border-top: 1px solid var(--border); text-align: center; }
+  .contact-section .section-title { font-size: clamp(50px, 9vw, 120px); }
+  .contact-email {
+    display: inline-block; font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(16px, 2.8vw, 34px); color: var(--accent);
+    letter-spacing: 3px; text-decoration: none; margin-bottom: 48px; position: relative;
+  }
+  .contact-email::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -4px;
+    height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .contact-email:hover::after { transform: scaleX(1); }
+
+  .social-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .social-link {
+    font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    letter-spacing: 2px; color: var(--muted); text-decoration: none;
+    text-transform: uppercase; padding: 10px 20px; border: 1px solid var(--border);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .social-link:hover { border-color: var(--accent); color: var(--accent); }
+  .social-link.linkedin:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer {
+    position: relative; z-index: 1; padding: 24px 48px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 0.65rem; }
+    .hero { padding: 0 24px; padding-top: 90px; }
+    section { padding: 80px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .hero-bg-text { display: none; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">Russell Sumarno</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Vancouver, BC · Open to Opportunities · 2026</div>
+    <div class="dual-badges">
+      <span class="badge badge-bio">Biomedical Engineer</span>
+      <span class="badge badge-data">Data Analyst</span>
+    </div>
+    <h1>BRIDGING<br><span class="outline">BIOLOGY</span><br>&amp; <span class="outline2">DATA</span></h1>
+    <p class="hero-desc">UBC Biomedical Engineering graduate with a knack for data. I design medical devices, build KPI dashboards, and turn complex systems into clear, actionable insight.</p>
+    <div class="hero-ctas">
+      <a href="#experience" class="btn-primary">View Experience</a>
+      <a href="mailto:russellsumarno@gmail.com" class="btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-bg-text">BIO·DATA</div>
+</section>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="status-track">
+    <div class="status-item"><span>✦</span> Power BI & Tableau</div>
+    <div class="status-item"><span class="g">✦</span> Biomedical Instrumentation</div>
+    <div class="status-item"><span>✦</span> SQL & Python</div>
+    <div class="status-item"><span class="g">✦</span> Microfluidics & PCR</div>
+    <div class="status-item"><span>✦</span> KPI Reporting</div>
+    <div class="status-item"><span class="g">✦</span> UBC Applied Science Rising Star</div>
+    <div class="status-item"><span>✦</span> Process Improvement</div>
+    <div class="status-item"><span class="g">✦</span> 4× Chem-E-Car Champion</div>
+    <div class="status-item"><span>✦</span> Power BI & Tableau</div>
+    <div class="status-item"><span class="g">✦</span> Biomedical Instrumentation</div>
+    <div class="status-item"><span>✦</span> SQL & Python</div>
+    <div class="status-item"><span class="g">✦</span> Microfluidics & PCR</div>
+    <div class="status-item"><span>✦</span> KPI Reporting</div>
+    <div class="status-item"><span class="g">✦</span> UBC Applied Science Rising Star</div>
+    <div class="status-item"><span>✦</span> Process Improvement</div>
+    <div class="status-item"><span class="g">✦</span> 4× Chem-E-Car Champion</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <div class="section-label">// 01 — About</div>
+    <div class="section-title">WHO I AM</div>
+  </div>
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="about-text">
+        <p>I'm Russell — a Biomedical Engineering graduate from UBC who lives at the intersection of life sciences and data. I've built medical devices in the lab and KPI dashboards in the boardroom, and I'm equally at home in both worlds.</p>
+        <p>My engineering foundation gives me a rigorous, systems-thinking approach to problems. My analytical experience means I can translate that into decisions stakeholders can actually act on.</p>
+        <p>I graduated With Distinction, was named an Applied Science Rising Star, and received the Outstanding International Student Award. Trilingual in English, Mandarin, and Indonesian.</p>
+      </div>
+
+      <div class="domain-cards" style="margin-top: 36px;">
+        <div class="domain-card">
+          <div class="domain-icon">🧬</div>
+          <div>
+            <div class="domain-label bio">Biomedical Engineering</div>
+            <div class="domain-desc">Device design, lab automation, bioreactor systems, microfluidics, instrumentation & measurement, PCR, Western Blotting, SolidWorks, Altium.</div>
+          </div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-icon">📊</div>
+          <div>
+            <div class="domain-label data">Data & Operations Analysis</div>
+            <div class="domain-desc">Power BI, Tableau, SQL, Python, Advanced Excel, Power Automate, KPI reporting, process improvement, CRM administration.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="highlight-stats">
+        <div class="stat-box">
+          <div class="stat-num">21</div>
+          <div class="stat-label">Facilities monitored via SQL</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">1K+</div>
+          <div class="stat-label">Work orders managed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Power BI dashboards built</div>
+        </div>
+        <a href="https://apsc.ubc.ca/spotlight/student/russell-sumarno" target="_blank" rel="noopener" class="stat-box" style="text-decoration:none; transition: border-color 0.2s;" onmouseover="this.style.borderColor='rgba(232,255,71,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div class="stat-num" style="font-size: 1.6rem; line-height: 1.1;">⭐ STAR</div>
+          <div class="stat-label">UBC Applied Science Rising Star · Read feature ↗</div>
+        </a>
+      </div>
+
+      <div class="skills-section">
+        <div class="skills-group">
+          <div class="skills-group-label">Data & Analytics</div>
+          <div class="skills-grid">
+            <div class="skill-chip">Power BI</div>
+            <div class="skill-chip">Tableau</div>
+            <div class="skill-chip">SQL</div>
+            <div class="skill-chip">Python</div>
+            <div class="skill-chip">Advanced Excel</div>
+            <div class="skill-chip">Power Automate</div>
+            <div class="skill-chip">SharePoint</div>
+            <div class="skill-chip">MATLAB</div>
+          </div>
+        </div>
+        <div class="skills-group">
+          <div class="skills-group-label">Biomedical & Lab</div>
+          <div class="skills-grid">
+            <div class="skill-chip bio">SolidWorks</div>
+            <div class="skill-chip bio">Altium</div>
+            <div class="skill-chip bio">MaxxLIMS</div>
+            <div class="skill-chip bio">PCR</div>
+            <div class="skill-chip bio">Western Blotting</div>
+            <div class="skill-chip bio">Gel Electrophoresis</div>
+            <div class="skill-chip bio">Bioreactor Ops</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="padding-top: 0;">
+  <div class="reveal">
+    <div class="section-label">// 02 — Experience</div>
+    <div class="section-title">WHERE I'VE<br>WORKED</div>
+  </div>
+  <div class="exp-list">
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div class="exp-role-row">
+          <div class="exp-role">Operations Analyst</div>
+          <span class="exp-type-badge data">Data & Ops</span>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-company">tada! by Trinity Design Studio</div>
+          <div class="exp-date">05/2025 – Present · Remote, Indonesia</div>
+        </div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Maintained tracking systems and produced recurring performance reports for leadership across multiple business functions.</li>
+        <li>Tracked digital campaign funnel metrics, driving social media growth from launch to 2,300+ followers through data-driven strategy.</li>
+        <li>Coordinated communication and scheduling with external partners and internal stakeholders.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div class="exp-role-row">
+          <div class="exp-role">Operations Engineer Intern</div>
+          <span class="exp-type-badge both">Data & Engineering</span>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-company">Innergex Renewable Energy</div>
+          <div class="exp-date">01/2024 – 12/2024 · Vancouver, BC</div>
+        </div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Built 3 Power BI dashboards to monitor operational KPIs and communicate performance trends to engineering and operations teams.</li>
+        <li>Queried and analyzed production data using SQL to identify anomalies and support root-cause investigations across 21 hydroelectric facilities.</li>
+        <li>Managed over 1,000 work orders in Excel, ensuring accurate documentation and traceability across all operations.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div class="exp-role-row">
+          <div class="exp-role">Laboratory Logistics Intern</div>
+          <span class="exp-type-badge bio">Biomedical</span>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-company">Bureau Veritas North America</div>
+          <div class="exp-date">05/2023 – 12/2023 · Burnaby, BC</div>
+        </div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Processed and documented 100+ environmental samples daily with strict QC compliance and full chain-of-custody traceability.</li>
+        <li>Logged and updated sample data for ~200 client accounts weekly using MaxxLIMS, maintaining complete records.</li>
+        <li>Identified and flagged non-conforming samples, escalating discrepancies for corrective action.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card bio-card reveal">
+      <div class="exp-header">
+        <div class="exp-role-row">
+          <div class="exp-role">Lab Automation Research Assistant</div>
+          <span class="exp-type-badge bio">Biomedical</span>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-company">EMBeRR Lab, UBC</div>
+          <div class="exp-date">04/2023 – 12/2023 · Vancouver, BC</div>
+        </div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Integrated Chi.Bio smart bioreactor controllers, enabling automated liquid handling, real-time optical density monitoring, and remote experiment control.</li>
+        <li>Authored the SOP for Chi.Bio operation, documenting setup, calibration, and troubleshooting protocols for the broader research team.</li>
+        <li>Performed weekly temperature and pH monitoring across all bioreactors and compiled trend summaries to support experimental decisions.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="padding-top: 0;">
+  <div class="reveal">
+    <div class="section-label">// 03 — Projects</div>
+    <div class="section-title">SELECTED<br>WORK</div>
+  </div>
+  <div class="projects-grid">
+
+    <a href="https://engineering.ubc.ca/spotlight/student-project/rapid-point-of-care-device-to-identify-antibiotic-treatment-options" target="_blank" rel="noopener" class="project-card bio-proj reveal">
+      <div class="project-num bio">01 / 2024–2025</div>
+      <div class="project-arrow">↗</div>
+      <div class="project-title">Near-Patient Antibiotic Susceptibility Test</div>
+      <p class="project-desc">Designed and prototyped an automated point-of-care device to identify effective narrow-spectrum antibiotics for UTIs in under 6 hours. Reduced user interactions from 9 steps to 1 through smart system integration. Featured by UBC Engineering.</p>
+      <div class="project-tags">
+        <span class="tag">Biomedical</span><span class="tag">Microfluidics</span><span class="tag">Automation</span><span class="tag">Peristaltic Pumping</span><span class="tag">UBC Featured</span>
+      </div>
+    </a>
+
+    <div class="project-card reveal">
+      <div class="project-num">02 / 2024</div>
+      <div class="project-arrow">↗</div>
+      <div class="project-title">Operational KPI Dashboards</div>
+      <p class="project-desc">Built 3 Power BI dashboards for a renewable energy operator, enabling real-time performance monitoring across 21 hydroelectric facilities and supporting SQL-driven anomaly detection and root-cause analysis.</p>
+      <div class="project-tags">
+        <span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">Data Analysis</span><span class="tag">Renewable Energy</span>
+      </div>
+    </div>
+
+    <a href="https://chbe.ubc.ca/news/2025/ubc-chem-e-car-team-wins-multiple-awards-at-aiche-annual-student-conference/" target="_blank" rel="noopener" class="project-card bio-proj reveal">
+      <div class="project-num bio">03 / 2022–2025</div>
+      <div class="project-arrow">↗</div>
+      <div class="project-title">UBC Chem-E-Car — Electrical Team Lead</div>
+      <p class="project-desc">Led a team of 5 in designing a custom Arduino-based PCB with motor control, sensors, and autonomous stopping mechanisms. Achieved 1st place in 2022, 2023 & 2025 at the AIChE Regional Competition. Read the official UBC feature.</p>
+      <div class="project-tags">
+        <span class="tag">Arduino</span><span class="tag">PCB Design</span><span class="tag">Altium</span><span class="tag">Team Lead</span><span class="tag">AIChE 1st Place</span>
+      </div>
+    </a>
+
+    <a href="https://apsc.ubc.ca/spotlight/student/russell-sumarno" target="_blank" rel="noopener" class="project-card reveal">
+      <div class="project-num">04 / 2022</div>
+      <div class="project-arrow">↗</div>
+      <div class="project-title">UBC Applied Science Rising Star</div>
+      <p class="project-desc">"Creating UBC's very own Spiderman" — featured by UBC Applied Science as a Rising Star student. A profile on the journey from Jakarta to Vancouver, curiosity about surgical robotics, and what drives a career at the intersection of biology and engineering.</p>
+      <div class="project-tags">
+        <span class="tag">UBC Feature</span><span class="tag">Rising Star</span><span class="tag">Applied Science</span><span class="tag">Biomedical Engineering</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="reveal">
+    <div class="section-label">// 04 — Contact</div>
+    <div class="section-title">LET'S<br>CONNECT</div>
+    <a class="contact-email" href="mailto:russellsumarno@gmail.com">russellsumarno@gmail.com</a>
+    <br><br>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/russellws/" target="_blank" rel="noopener" class="social-link linkedin">LinkedIn</a>
+      <a href="tel:2369958222" class="social-link">(236) 995-8222</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Russell William Sumarno — Vancouver, BC</p>
+  <p>Biomedical Engineer · Data Analyst</p>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  // Scroll reveals
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
